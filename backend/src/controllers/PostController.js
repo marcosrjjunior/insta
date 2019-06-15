@@ -11,7 +11,6 @@ module.exports = {
   },
 
   async store(req, res) {
-    console.log(req.body)
     const { author, place, description, hashtags } = req.body
     const { filename: image } = req.file
 
@@ -36,5 +35,13 @@ module.exports = {
     req.io.emit('post', post)
 
     return res.json(post)
+  },
+
+  async delete(req, res) {
+    const post = await Post.findById(req.params.id)
+
+    await post.delete()
+    
+    return res.json('post deleted')
   },
 }

@@ -9,6 +9,7 @@ const LikeController = require('./controllers/LikeController')
 
 routes.get('/posts', PostController.index)
 routes.post('/posts', upload.single('image'), PostController.store)
+routes.delete('/posts/:id', PostController.delete)
 
 routes.post('/posts/:id/like', LikeController.store)
 
