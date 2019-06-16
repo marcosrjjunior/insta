@@ -1,44 +1,42 @@
-import React, { Component } from 'react'
-import api from '../services/api'
-import io from 'socket.io-client'
+import React, { Component } from 'react';
+import api from '../services/api';
+import io from 'socket.io-client';
 
-import './Feed.css'
-import more from '../assets/more.svg'
-import like from '../assets/like.svg'
-import comment from '../assets/comment.svg'
-import send from '../assets/send.svg'
+import './Feed.css';
+import more from '../assets/more.svg';
+import like from '../assets/like.svg';
+import comment from '../assets/comment.svg';
+import send from '../assets/send.svg';
 
 export default class Feed extends Component {
   state = {
-    feed: [],
-  }
+    feed: []
+  };
 
   async componentDidMount() {
-    this.registerToSocket()
-    const response = await api.get('posts')
+    this.registerToSocket();
+    const response = await api.get('posts');
 
-    this.setState({ feed: response.data })
+    this.setState({ feed: response.data });
   }
 
   handleLike = id => {
-    api.post(`posts/${id}/like`)
-  }
+    api.post(`posts/${id}/like`);
+  };
 
   registerToSocket = id => {
-    const socket = io('http://localhost:3333')
+    const socket = io('http://localhost:3333');
 
     socket.on('post', newPost => {
-      this.setState({ feed: [newPost, ...this.state.feed] })
-    })
+      this.setState({ feed: [newPost, ...this.state.feed] });
+    });
 
     socket.on('like', likedPost => {
       this.setState({
-        feed: this.state.feed.map(post =>
-          post._id === likedPost._id ? likedPost : post,
-        ),
-      })
-    })
-  }
+        feed: this.state.feed.map(post => (post._id === likedPost._id ? likedPost : post))
+      });
+    });
+  };
 
   render() {
     return (
@@ -54,10 +52,7 @@ export default class Feed extends Component {
               <img src={more} alt="More" />
             </header>
 
-            <img
-              src={`http://localhost:3333/files/${post.image}`}
-              alt="post pic"
-            />
+            <img src={`http://localhost:3333/files/${post.image}`} alt="post pic" />
 
             <footer>
               <div className="actions">
@@ -78,6 +73,6 @@ export default class Feed extends Component {
           </article>
         ))}
       </section>
-    )
+    );
   }
 }
