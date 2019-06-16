@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../services/api';
 import io from 'socket.io-client';
+import { APP_URL } from 'react-native-dotenv';
 
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
@@ -36,7 +37,7 @@ export default class Feed extends Component {
   };
 
   registerToSocket = id => {
-    const socket = io('http://192.168.1.103:3333');
+    const socket = io(APP_URL);
 
     socket.on('post', newPost => {
       this.setState({ feed: [newPost, ...this.state.feed] });
@@ -68,7 +69,7 @@ export default class Feed extends Component {
 
               <Image
                 source={{
-                  uri: `http://192.168.1.103:3333/files/${item.image}`
+                  uri: item.image
                 }}
                 style={styles.feedImage}
               />
