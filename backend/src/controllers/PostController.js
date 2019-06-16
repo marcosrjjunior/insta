@@ -12,8 +12,6 @@ module.exports = {
   async store(req, res) {
     const { author, place, description, hashtags } = req.body;
     const { originalname: name, size, key, location: image = '' } = req.file;
-
-    console.log(req.file);
     // const [name] = image.split('.');
     // const fileName = `${name}.jpg`;
 
