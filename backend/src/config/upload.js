@@ -30,5 +30,8 @@ const storageTypes = {
 };
 
 module.exports = {
-  storage: storageTypes[process.env.STORAGE_TYPE]
+  storage: storageTypes[process.env.STORAGE_TYPE],
+  limits: {
+        fileSize: 1024 * 1024 * 5 // 5 MB files
+  }
 };
